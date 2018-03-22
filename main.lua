@@ -21,27 +21,52 @@ local randomNumber1
 local randomNumber2
 local userAnswer
 local correctAnswer
+local incorrectObject
+local randomOperation
 
 ----------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 ----------------------------------------------------------------------------
 
 local function AskQuestion()
+
+	-- program chooses a random number betweer 1-4
+      randomOperation = (1,4)
 	-- generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0,25)
 	randomNumber2 = math.random(0,21)
 
-	correctAnswer = randomNumber1 + randomNumber2
+	if ( randomOperation == 1)then correctAnswer = randomNumber1 + randomNumber2
 
 	--create question in text object
 	questionObject.text = randomNumber1 .. " + " .. randomNumber2 .. " = "
+    end
 
+    if (randomOperation == 2) then correctAnswer = randomNumber1 - randomNumber2
+    --create question in text object
+    questionObject.text = randomNumber1 .. " - " .. randomNumber2.. " = "
 end
+
+if (randomOperation == 3) then correctAnswer = randomNumber1 * randomNumber2
+	--create question in text object
+	questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+
+
+if (randomOperation == 4)
+
+
+
 
 local function HideCorrect()
 	correctObject.isVisible = false
 	AskQuestion()
 end
+
+local function HideIncorrect()
+	incorrectObject.isVisible = false
+	AskQuestion()
+end
+
 
 local function NumericFieldListener( event )
 
@@ -58,7 +83,10 @@ local function NumericFieldListener( event )
 			--if the users answer and the correct answer are the same:
 			if (userAnswer == correctAnswer) then
 				correctObject.isVisible = true
-				timer.performWithDelay(2000,HideCorrect)
+				timer.performWithDelay(1000,HideCorrect)
+				else 
+				incorrectObject.isVisible = true
+                timer.performWithDelay(1000,HideIncorrect)
 			end
 		end
 	end
@@ -68,16 +96,22 @@ local function NumericFieldListener( event )
 	 -----------------------------------------------------------------
 
 	 -- displays a question and sets the colour	
-	 questionObject = display.newText("", display.contentWidth/3, display.contentHeight/2, nil, 50)
-	 questionObject:setTextColor(155/255, 42/255, 100/255)
+	 questionObject = display.newText("", display.contentWidth/3, display.contentHeight/2, nil, 40)
+	 questionObject:setTextColor(155/255, 150/255, 100/255)
 
 	 --create the correct text object and make it invisible
 	 correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3,nil,50)
 	 correctObject.isVisible = false
+	 correctObject:setTextColor(180/255,120/255,100/255)
 
+	 -- create the incorrect text object and make it invisible
+	 incorrectObject = display.newText( "Incorrect", display.contentWidth/2, display.contentHeight*2/3,nil,50)
+	 incorrectObject.isVisible = false
+	 incorrectObject:setTextColor(100/255, 180/255, 19/255)
 	 -- Create Numeric field
-	 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 150, 80)
+	 numericField = native.newTextField( 500, 350, 150, 30)
 	 numericField.inputType = "number"
+
 
 	 -- add the event listener for the numeric field
 	 numericField:addEventListener( "userInput", NumericFieldListener )
@@ -87,4 +121,4 @@ local function NumericFieldListener( event )
 	 ---------------------------------------------------------------------
 
 	 -- call the function to ask the question
-	 AskQuestion()
+	 AskQuestion(1,3)
