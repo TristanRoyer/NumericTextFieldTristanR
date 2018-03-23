@@ -31,7 +31,7 @@ local randomOperation
 local function AskQuestion()
 
 	-- program chooses a random number betweer 1-4
-      randomOperation = (1,4)
+      randomOperation = math.random(1,4)
 	-- generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0,25)
 	randomNumber2 = math.random(0,21)
@@ -50,12 +50,14 @@ end
 if (randomOperation == 3) then correctAnswer = randomNumber1 * randomNumber2
 	--create question in text object
 	questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+end
 
+if (randomOperation == 4) then correctAnswer = randomNumber1 / randomNumber2
+	--create question in text object
+	questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "
+end
 
-if (randomOperation == 4)
-
-
-
+end
 
 local function HideCorrect()
 	correctObject.isVisible = false
@@ -121,4 +123,4 @@ local function NumericFieldListener( event )
 	 ---------------------------------------------------------------------
 
 	 -- call the function to ask the question
-	 AskQuestion(1,3)
+	 AskQuestion()
