@@ -35,7 +35,7 @@ local function AskQuestion()
 	-- generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0,25)
 	randomNumber2 = math.random(0,21)
-
+	
 	if ( randomOperation == 1)then correctAnswer = randomNumber1 + randomNumber2
 
 	--create question in text object
