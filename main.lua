@@ -31,7 +31,7 @@ local randomOperation
 local function AskQuestion()
 
 	-- program chooses a random number betweer 1-4
-      randomOperation = math.random(1,4)
+      randomOperation = math.random(1,3)
 	-- generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0,25)
 	randomNumber2 = math.random(0,21)
@@ -52,10 +52,7 @@ if (randomOperation == 3) then correctAnswer = randomNumber1 * randomNumber2
 	questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
 end
 
-if (randomOperation == 4) then correctAnswer = randomNumber1 / randomNumber2
-	--create question in text object
-	questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "
-end
+
 
 end
 
@@ -90,6 +87,8 @@ local function NumericFieldListener( event )
 				incorrectObject.isVisible = true
                 timer.performWithDelay(1000,HideIncorrect)
 			end
+			--clear text field
+		event.target.text = ""
 		end
 	end
 
