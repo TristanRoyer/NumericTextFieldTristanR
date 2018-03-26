@@ -23,7 +23,8 @@ local userAnswer
 local correctAnswer
 local incorrectObject
 local randomOperation
-
+local numericField
+local score = 0
 ----------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 ----------------------------------------------------------------------------
@@ -35,7 +36,8 @@ local function AskQuestion()
 	-- generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0,25)
 	randomNumber2 = math.random(0,21)
-	
+	randomNumber3 = math.random(0,10)
+	randomNumber4 = math.random(0,10)
 	if ( randomOperation == 1)then correctAnswer = randomNumber1 + randomNumber2
 
 	--create question in text object
@@ -45,11 +47,14 @@ local function AskQuestion()
     if (randomOperation == 2) then correctAnswer = randomNumber1 - randomNumber2
     --create question in text object
     questionObject.text = randomNumber1 .. " - " .. randomNumber2.. " = "
+    elseif (correctAnswer > 0) then
+    	correctAnswer = randomNumber2 - randomNumber1
+    	questionObject.text = randomNumber2 .. " - " .. randomNumber1 .. " = "
 end
 
-if (randomOperation == 3) then correctAnswer = randomNumber1 * randomNumber2
+if (randomOperation == 3) then correctAnswer = randomNumber3 * randomNumber4
 	--create question in text object
-	questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+	questionObject.text = randomNumber3 .. " * " .. randomNumber4 .. " = "
 end
 
 
@@ -92,6 +97,14 @@ local function NumericFieldListener( event )
 		end
 	end
 
+	local function NumericFieldListener2( event )
+			score = tonumber(event.target.text)
+			
+			if (userAnswer == correctAnswer) then
+				score = score + 1
+			end
+
+
 	 -----------------------------------------------------------------
 	 -- OBJECT CREATION
 	 -----------------------------------------------------------------
@@ -113,9 +126,17 @@ local function NumericFieldListener( event )
 	 numericField = native.newTextField( 500, 350, 150, 30)
 	 numericField.inputType = "number"
 
+	 -- create numeric field 2
+	  numericField2 = native.newTextField( 700, 100, 180, 100)
+	 numericField.inputType = "number"
+
+
 
 	 -- add the event listener for the numeric field
 	 numericField:addEventListener( "userInput", NumericFieldListener )
+	 -- add the event listener for the numeric field
+	 numericField:addEventListener( "userInput", NumericFieldListener2 )
+
 
 	 ---------------------------------------------------------------------
 	 --FUNCTION CALLS
