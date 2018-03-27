@@ -25,6 +25,7 @@ local incorrectObject
 local randomOperation
 local numericField
 local score = 0
+local scoreText
 ----------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 ----------------------------------------------------------------------------
@@ -104,22 +105,14 @@ local function ScoreTracker( event )
 
 local scoreTimer
 
-local score = 0
-
 
 if (userAnswer == correctAnswer) then
 
-local updateScore = function()
-
-  score = score + 1
+score = score + 1
 
 end
 
-end
-
-scoreTimer = timer.performWithDelay(1000,updateScore,-1)
-
-
+scoreText.text = score .. ""
 
 end
 
@@ -130,6 +123,9 @@ end
 	 -- displays a question and sets the colour	
 	 questionObject = display.newText("", display.contentWidth/3, display.contentHeight/2, nil, 40)
 	 questionObject:setTextColor(155/255, 150/255, 100/255)
+
+	 --displays the score
+	 scoreText = display.newText("", 500,500, nil, 40)
 
 	 --create the correct text object and make it invisible
 	 correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3,nil,50)
@@ -155,7 +151,7 @@ end
 	 -- add the event listener for the numeric field
 	 numericField:addEventListener( "userInput", NumericFieldListener )
 	 -- add the event listener for the score tracker
-	 numericField:addEventListener( "userInput", ScoreTracker  )
+	 numericField:addEventListener( "userInput", ScoreTracker )
 
 
 	 ---------------------------------------------------------------------
