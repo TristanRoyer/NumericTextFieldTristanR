@@ -47,7 +47,8 @@ local function AskQuestion()
     if (randomOperation == 2) then correctAnswer = randomNumber1 - randomNumber2
     --create question in text object
     questionObject.text = randomNumber1 .. " - " .. randomNumber2.. " = "
-    elseif (correctAnswer > 0) then
+    
+    elseif (correctAnswer < 0) then
     	correctAnswer = randomNumber2 - randomNumber1
     	questionObject.text = randomNumber2 .. " - " .. randomNumber1 .. " = "
 end
@@ -97,13 +98,30 @@ local function NumericFieldListener( event )
 		end
 	end
 
-	local function NumericFieldListener2( event )
-			score = tonumber(event.target.text)
-			
-			if (userAnswer == correctAnswer) then
-				score = score + 1
-			end
+	
 
+local function ScoreTracker( event )
+
+local scoreTimer
+
+local score = 0
+
+
+if (userAnswer == correctAnswer) then
+
+local updateScore = function()
+
+  score = score + 1
+
+end
+
+end
+
+scoreTimer = timer.performWithDelay(1000,updateScore,-1)
+
+
+
+end
 
 	 -----------------------------------------------------------------
 	 -- OBJECT CREATION
@@ -126,16 +144,18 @@ local function NumericFieldListener( event )
 	 numericField = native.newTextField( 500, 350, 150, 30)
 	 numericField.inputType = "number"
 
-	 -- create numeric field 2
-	  numericField2 = native.newTextField( 700, 100, 180, 100)
-	 numericField.inputType = "number"
+	 
+	 -- create the score text object 
+	 score = display.newText( score, display.contentWidth/2, display.contentHeight*2/3,nil,50)
+	 score:setTextColor(100/255, 180/255, 19/255)
+	
 
 
 
 	 -- add the event listener for the numeric field
 	 numericField:addEventListener( "userInput", NumericFieldListener )
-	 -- add the event listener for the numeric field
-	 numericField:addEventListener( "userInput", NumericFieldListener2 )
+	 -- add the event listener for the score tracker
+	 numericField:addEventListener( "userInput", ScoreTracker  )
 
 
 	 ---------------------------------------------------------------------
@@ -143,4 +163,4 @@ local function NumericFieldListener( event )
 	 ---------------------------------------------------------------------
 
 	 -- call the function to ask the question
-	 AskQuestion()
+	 AskQuestion() 
